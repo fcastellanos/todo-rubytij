@@ -33,6 +33,7 @@ gem 'jbuilder', '~> 2.5'
 group :test do
   gem 'rspec-rails' # https://relishapp.com/rspec
   gem 'pry'
+  gem 'json-schema'
 end
 
 group :development, :test do
