@@ -7,6 +7,14 @@ class Requests::Me
     build_response(response, status)
   end
 
+  def self.update(user, params)
+    response = Requests::Me::UpdateRequest.update(user, params)
+
+    status = response.key?(:errors) ? :unprocessable_entity : :ok
+
+    build_response(response, status)
+  end
+
   private
 
   def self.build_response(body, status)

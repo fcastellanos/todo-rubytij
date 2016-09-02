@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # NOTE: module: 'v2' to define the controller namespace v2/me#show
   # NOTE: as: 'v2' to define the route helper method v2_me
   scope 'v2', module: 'v2', as: 'v2' do
-    get '/me' => 'me#show'
+    get   '/me' => 'me#show'
+    patch '/me' => 'me#update'
   end
 end

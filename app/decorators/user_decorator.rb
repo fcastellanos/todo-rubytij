@@ -1,6 +1,6 @@
 class UserDecorator < BaseDecorator
   def to_hash
-    return error_response if self.model.nil?
+    return error_response if self.model.nil? || self.model.errors.any?
 
     {
       id: self.id,
@@ -12,8 +12,10 @@ class UserDecorator < BaseDecorator
   private
 
   def error_response
+    errors = self.model.nil? ? ['The user could not be found'] : self.model.errors.full_messages
+
     {
-      errors: ['The user could not be found']
+      errors: errors
     }
   end
 end

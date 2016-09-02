@@ -35,4 +35,53 @@ describe Requests::Me do
       it { expect(subject).to eq(expected_response) }
     end
   end
+
+  describe '.update(user, params)' do
+    let(:user) { users(:user_1) }
+
+    context 'when sending good params' do
+      let(:params) do
+        {
+          first_name: 'Pepe',
+          last_name: 'La Rana',
+          city: 'Lima'
+        }
+      end
+      let(:expected_response) do
+        {
+          json: UserDecorator.new(user).to_hash,
+          status: :ok
+        }
+      end
+
+      subject do
+        described_class.update(user, params)
+      end
+
+      it { expect(subject).to eq(expected_response) }
+    end
+
+    context 'when it fails validation' do
+      let(:params) do
+        {
+          first_name: nil,
+          city: nil
+        }
+      end
+      let(:expected_response) do
+        {
+          json: {
+            errors: ["First name can't be blank", "City can't be blank"]
+          },
+          status: :unprocessable_entity
+        }
+      end
+
+      subject do
+        described_class.update(user, params)
+      end
+
+      it { expect(subject).to eq(expected_response) }
+    end
+  end
 end
